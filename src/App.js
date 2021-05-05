@@ -1,9 +1,11 @@
 import React from 'react';
+// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Header from "./components/Layout/Header";
 
 const App = () => {
     return (
         <div>
-          <h1>Hello, World!</h1>
+          <Header />
         </div>
     );
 };

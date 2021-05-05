@@ -1,0 +1,23 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 80px;
+    background-color: #232931;
+    z-index: 10;
+}
+
+.header nav {
+    height: 100%;
+}
+
+.header img {
+    background-color: white;
+    height: 70%;
+}
