@@ -1,5 +1,4 @@
 .header {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -11,6 +10,7 @@
     padding: 0 80px;
     background-color: #232931;
     z-index: 10;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .header nav {
