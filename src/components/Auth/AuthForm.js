@@ -9,21 +9,25 @@ const AuthForm = () => {
 
     const [isLogin, setIsLogin] = useState(true);
     const [username, setUsername] = useState("");
-    const [usernameError, setUsernameError] = useState(false);
+    const [usernameError, setUsernameError] = useState(true);
+    const [usernameTouched, setUsernameTouched] = useState(false);
     const [password, setPassword] = useState("");
-    const [passwordError, setPasswordError] = useState(false);
+    const [passwordError, setPasswordError] = useState(true);
+    const [passwordTouched, setPasswordTouched] = useState(false);
     const error = useSelector(state => state.auth.error);
     const formIsValid = !passwordError && !usernameError;
     const dispatch = useDispatch();
 
     const usernameChangeHandler = (event) => {
         const newValue = event.target.value;
+        setUsernameTouched(true);
         setUsername(newValue);
         setUsernameError(newValue.trim().length < 3);
     }
 
     const passwordChangeHandler = (event) => {
         const newValue = event.target.value;
+        setPasswordTouched(true);
         setPassword(newValue);
         setPasswordError(newValue.trim().length < 8);
     }
@@ -39,26 +43,32 @@ const AuthForm = () => {
     }
 
     const toggleAuthModeHandler = () => {
+        setUsernameTouched(false);
+        setPasswordTouched(false);
+        setUsername("");
+        setUsernameError(true);
+        setPassword("");
+        setPasswordError(true);
         setIsLogin(prevState => !prevState);
     }
 
     return (
         <section className={classes.auth}>
-            {isLogin ? <img src={headphonesIcon} /> : <img src={addUser} />}
+            {isLogin ? <img src={headphonesIcon} alt={"logo"} /> : <img src={addUser} alt={"logo"} />}
             <h1>{isLogin ? "Login" : "Sign Up"}</h1>
             {error && <p>Please check your credentials</p>}
             <form>
                 <div className={classes.control}>
                     <label htmlFor="username">Username</label>
                     <input type={"text"} id={"username"} requried value={username} onChange={usernameChangeHandler}
-                    placeholder={"Username"}/>
-                    {usernameError && <p>Username must be at least 3 characters long</p>}
+                    placeholder={"Username"} autoComplete={"off"}/>
+                    {usernameError && usernameTouched && <p>Username must be at least 3 characters long</p>}
                 </div>
                 <div className={classes.control}>
                     <label htmlFor={"password"}>Password</label>
                     <input type={"password"} id={"password"} required value={password}
                            onChange={passwordChangeHandler} placeholder={"Password"}/>
-                    {passwordError && <p>Password must be at least 8 characters long</p>}
+                    {passwordError && passwordTouched && <p>Password must be at least 8 characters long</p>}
                 </div>
                 <div className={classes.actions}>
                     <button onClick={submitHandler} disabled={!formIsValid}>
