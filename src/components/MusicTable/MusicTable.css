@@ -1,0 +1,33 @@
+.content-table{
+    border-collapse: collapse;
+    margin: 70px auto;
+    font-size: 0.9rem;
+    min-width: 600px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.content-table thead tr {
+    background-color: #232931;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th, 
+.content-table td{
+    padding: 12px 15px;
+}
+
+.content-table tbody tr{
+    background-color: #232931;
+    border-bottom: 1px solid #ffffff2c;
+}
+
+td{
+    color: #ffffff;
+}
+
+.content-table thead th{
+    border-bottom: 1px solid #ffffff;
+}
