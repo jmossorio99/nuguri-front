@@ -1,0 +1,52 @@
+.separator {
+    border-bottom: 1px solid #ccc;
+}
+
+.control {
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.control label {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.control input {
+    font: inherit;
+    background-color: #C4C4C4;
+    color: black;
+    border-radius: 10px;
+    border: transparent;
+    width: 50%;
+    text-align: left;
+    padding: 0.25rem;
+}
+
+.actions {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actions button {
+    cursor: pointer;
+    font: inherit;
+    color: white;
+    background-color: #232931;
+    border: transparent;
+    border-radius: 20px;
+    padding: 0.5rem 2.5rem;
+}
+
+.actions button:hover {
+    background-color: #293039;
+}
+
+.actions button:disabled {
+    cursor: not-allowed;
+    background-color: #6a7e92;
+    border-color: #6a7e92;
+    color: #b4b4b4;
+}

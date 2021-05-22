@@ -10,7 +10,7 @@ const NavigationItems = () => {
     const navItems = (
         <ul className={classes.navigationItems}>
             <NavigationItem link="/">Home</NavigationItem>
-            <NavigationItem link="/rank">Rank songs</NavigationItem>
+            <NavigationItem link="/rank">Rate songs</NavigationItem>
             <NavigationItem link="/profile">Profile</NavigationItem>
             <div className={classes.line}></div>
             <NavigationItem logout>Sign out</NavigationItem>

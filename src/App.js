@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import AuthPage from "./pages/AuthPage";
 import Profile from "./pages/Profile";
 import RankPage from "./pages/RankPage";

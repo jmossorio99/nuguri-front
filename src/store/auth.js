@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../axios";
 
 const initialState = {
     token: null,
@@ -19,7 +19,7 @@ const authSlice = createSlice({
             state.error = false;
             localStorage.setItem("token", token);
             const expirationDate = new Date(new Date().getTime() + expiration * 1000);
-            localStorage.setItem("expiration_date", expirationDate.toISOString());
+            localStorage.setItem("expiration_date", expirationDate);
         },
         logout(state) {
             state.token = null;
@@ -37,7 +37,7 @@ const authSlice = createSlice({
 export const sendAuthRequest = (payload) => {
     const isLogin = payload.isLogin;
     return (dispatch) => {
-        axios.post(`http://localhost:8080/auth/${isLogin ? "login" : "signup"}`, {
+        axios.post(`/auth/${isLogin ? "login" : "signup"}`, {
             username:
             payload.username, password: payload.password
         })

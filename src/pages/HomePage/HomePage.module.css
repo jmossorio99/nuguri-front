@@ -1,0 +1,18 @@
+.homePage {
+    text-align: center;
+}
+
+.homePage button {
+    background-color: #232931;
+    color: white;
+    border-radius: 20px;
+    border-color: transparent;
+    font-size: 15px;
+    width: 200px;
+    height: 35px;
+}
+
+.homePage button:hover{
+    background-color: #293039;
+    cursor: pointer;
+}

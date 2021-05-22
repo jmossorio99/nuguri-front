@@ -8,23 +8,26 @@
 }
 
 .content-table thead tr {
-    background-color: #232931;
+    background-color: #393E46;
     color: #ffffff;
-    text-align: left;
     font-weight: bold;
 }
 
-.content-table th, 
+.content-table tr {
+    text-align: left;
+}
+
+.content-table th,
 .content-table td{
     padding: 12px 15px;
 }
 
 .content-table tbody tr{
-    background-color: #232931;
+    background-color: #393E46;
     border-bottom: 1px solid #ffffff2c;
 }
 
-td{
+.content-table td{
     color: #ffffff;
 }
 
