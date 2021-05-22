@@ -1,13 +1,20 @@
-import React, { Fragment } from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 import AuthPage from "./pages/AuthPage";
 import Profile from "./pages/Profile";
 import RankPage from "./pages/RankPage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {authCheckState} from "./store/auth";
 
 const App = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(authCheckState());
+    }, [dispatch])
 
     const isLoggedIn = useSelector(state => state.auth.token !== null);
 

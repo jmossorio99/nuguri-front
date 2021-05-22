@@ -3,7 +3,6 @@ import axios from "../axios";
 
 const initialState = {
     token: null,
-    expiration: null,
     username: null,
     error: false
 }
@@ -12,10 +11,12 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
+        authSuccess(state, action) {
+          state.token = action.payload.token;
+        },
         login(state, action) {
             const {token, expiresIn: expiration} = action.payload;
             state.token = token;
-            state.expiration = expiration;
             state.error = false;
             localStorage.setItem("token", token);
             const expirationDate = new Date(new Date().getTime() + expiration * 1000);
@@ -23,7 +24,6 @@ const authSlice = createSlice({
         },
         logout(state) {
             state.token = null;
-            state.expiration = null;
             state.error = false;
             localStorage.removeItem("token");
             localStorage.removeItem("expiration_date");
@@ -42,9 +42,10 @@ export const sendAuthRequest = (payload) => {
             payload.username, password: payload.password
         })
             .then(res => {
-                // setTimeout(() => {
-                //     dispatch(authActions.logout());
-                // }, res.data.expiration)
+                console.log(res.data)
+                setTimeout(() => {
+                    dispatch(authActions.logout());
+                }, res.data.expiresIn)
                 dispatch(authActions.login(res.data));
             })
             .catch(err => {
@@ -52,6 +53,22 @@ export const sendAuthRequest = (payload) => {
             });
     };
 };
+
+export const authCheckState = () => {
+    return dispatch => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            dispatch(authActions.logout());
+        } else {
+            const expirationDate = new Date(localStorage.getItem("expiration_date"));
+            if (expirationDate <= new Date()) {
+                dispatch(authActions.logout());
+            } else {
+                dispatch(authActions.authSuccess({token}))
+            }
+        }
+    }
+}
 
 export const authActions = authSlice.actions;
 export default authSlice;

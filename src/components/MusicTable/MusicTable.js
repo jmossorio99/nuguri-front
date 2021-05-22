@@ -16,7 +16,7 @@ const MusicTable = (props) => {
         if (songs.length === 0) {
             dispatch(fetchSongs());
         }
-    }, [dispatch])
+    }, [dispatch, songs.length])
 
     const renderSongs = () => {
         let list = songs.map((song) => (
