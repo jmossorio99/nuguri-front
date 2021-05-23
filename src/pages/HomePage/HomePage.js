@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import SongForm from "../../components/SongForm";
+import SongForm from "../../components/SongForm/SongForm";
 import MusicTable from "../../components/MusicTable/MusicTable";
 import classes from "./HomePage.module.css";
 

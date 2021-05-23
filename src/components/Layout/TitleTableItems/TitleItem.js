@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
 import "./TitleItem.css";
 
-export default class TitleItem extends Component {
-    render() {
+const TitleItem = (props) => {
         return (
-            <h5 className="title">{this.props.children}</h5>
+            <h5 className="title">{props.children}</h5>
         )
-    }
 }
+
+export default TitleItem;
 
 
