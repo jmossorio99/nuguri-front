@@ -1,9 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import axios from "../axios";
+import jwt_decode from "jwt-decode";
 
 const initialState = {
     token: null,
     username: null,
+    role: null,
     error: false
 }
 
@@ -12,10 +14,16 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         authSuccess(state, action) {
-          state.token = action.payload.token;
+            const decodedToken = jwt_decode(action.payload.token);
+            state.username = decodedToken.username;
+            state.role = decodedToken.role;
+            state.token = action.payload.token;
         },
         login(state, action) {
             const {token, expiresIn: expiration} = action.payload;
+            const decodedToken = jwt_decode(token);
+            state.username = decodedToken.username;
+            state.role = decodedToken.role;
             state.token = token;
             state.error = false;
             localStorage.setItem("token", token);
@@ -24,6 +32,8 @@ const authSlice = createSlice({
         },
         logout(state) {
             state.token = null;
+            state.username = null;
+            state.role = null;
             state.error = false;
             localStorage.removeItem("token");
             localStorage.removeItem("expiration_date");
@@ -37,10 +47,14 @@ const authSlice = createSlice({
 export const sendAuthRequest = (payload) => {
     const isLogin = payload.isLogin;
     return (dispatch) => {
-        axios.post(`/auth/${isLogin ? "login" : "signup"}`, {
-            username:
-            payload.username, password: payload.password
-        })
+        const userData = {
+            username: payload.username,
+            password: payload.password
+        }
+        if (!isLogin) {
+            userData["role"] = "user";
+        }
+        axios.post(`/auth/${isLogin ? "login" : "signup"}`, userData)
             .then(res => {
                 console.log(res.data)
                 setTimeout(() => {
