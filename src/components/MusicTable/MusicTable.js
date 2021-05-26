@@ -1,9 +1,12 @@
-import React, {Fragment, useEffect} from 'react'
+import React, {Fragment, useEffect, useState} from 'react';
 import TitleItem from '../Layout/TitleTableItems/TitleItem';
 import classes from "./MusicTable.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchSongs} from "../../store/songs";
 import Spinner from "../UI/Spinner/Spinner";
+import Modal from "../UI/Modal/Modal";
+import YouTubeEmbedded from "../YouTubeEmbedded/YouTubeEmbeddded";
+import youTubeIcon from "../../assets/youtubeIcon.svg";
 
 const MusicTable = (props) => {
 
@@ -11,6 +14,14 @@ const MusicTable = (props) => {
     const error = useSelector(state => state.song.error);
     const isLoading = useSelector(state => state.song.loading);
     const dispatch = useDispatch();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [embedId, setEmbedId] = useState("");
+
+    function songClicked(embedId){
+        setEmbedId(embedId);
+        setIsOpen(true);
+    }
 
     useEffect(() => {
         if (songs.length === 0) {
@@ -21,6 +32,7 @@ const MusicTable = (props) => {
     const renderSongs = () => {
         let list = songs.map((song) => (
             <tr key={song._id}>
+                <td><img src={youTubeIcon} alt="Play icon" onClick={()=>songClicked(song.embedId)} /></td>
                 <td>{song.name}</td>
                 <td>{song.artist}</td>
                 <td>{song.album}</td>
@@ -35,6 +47,7 @@ const MusicTable = (props) => {
         <table className={classes["content-table"]}>
             <thead>
             <tr>
+                <th><TitleItem>Youtube</TitleItem></th>
                 <th><TitleItem>Title</TitleItem></th>
                 <th><TitleItem>Artist</TitleItem></th>
                 <th><TitleItem>Album</TitleItem></th>
@@ -57,6 +70,7 @@ const MusicTable = (props) => {
     return (
         <Fragment>
             {isLoading ? <Spinner /> : songList}
+            {isOpen && <Modal onBackdropClick={()=>setIsOpen(false)}><YouTubeEmbedded embedId={embedId} /></Modal>}
         </Fragment>
     )
 }

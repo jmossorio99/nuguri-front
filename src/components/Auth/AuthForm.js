@@ -60,7 +60,7 @@ const AuthForm = () => {
             <form>
                 <div className={classes.control}>
                     <label htmlFor="username">Username</label>
-                    <input type={"text"} id={"username"} requried value={username} onChange={usernameChangeHandler}
+                    <input type={"text"} id={"username"} required value={username} onChange={usernameChangeHandler}
                     placeholder={"Username"} autoComplete={"off"}/>
                     {usernameError && usernameTouched && <p>Username must be at least 3 characters long</p>}
                 </div>

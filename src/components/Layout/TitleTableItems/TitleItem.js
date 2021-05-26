@@ -1,8 +1,8 @@
-import "./TitleItem.css";
+import classes from "./TitleItem.module.css";
 
 const TitleItem = (props) => {
         return (
-            <h5 className="title">{props.children}</h5>
+            <h5 className={classes.title}>{props.children}</h5>
         )
 }
 

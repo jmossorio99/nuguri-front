@@ -7,6 +7,11 @@
     overflow: hidden;
 }
 
+.content-table img {
+    cursor: pointer;
+    color: #ffffff;
+}
+
 .content-table thead tr {
     background-color: #393E46;
     color: #ffffff;

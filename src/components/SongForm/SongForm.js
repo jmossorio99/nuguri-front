@@ -18,7 +18,10 @@ const SongForm = (props) => {
     const [album, setAlbum] = useState("");
     const [albumTouched, setAlbumTouched] = useState(false);
     const albumError = album.trim().length <= 0;
-    const formIsValid = !(titleError || artistError || albumError);
+    const [embedId, setEmbedId] = useState("");
+    const [embedIdTouched, setEmbedIdTouched] = useState(false);
+    const embedIdError = embedId.trim().length <= 0;
+    const formIsValid = !(titleError || artistError || albumError || embedIdError);
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
@@ -47,18 +50,27 @@ const SongForm = (props) => {
         setAlbum(newValue);
     }
 
+    // On change listener for embedId
+    const embedIdChangedHandler = (event) => {
+        const newValue = event.target.value;
+        setEmbedIdTouched(true);
+        setEmbedId(newValue);
+    }
+
     // This method handlers the submission of the form
     const submitHandler = (event) => {
         event.preventDefault()
         setTitleTouched(true);
         setAlbumTouched(true);
         setArtistTouched(true);
+        setEmbedIdTouched(true);
         if (formIsValid) {
             setLoading(true);
             const songData = {
                 name: title,
                 artist,
-                album
+                album,
+                embedId
             }
             axios.post("/song", songData)
                 .then(res => {
@@ -80,21 +92,27 @@ const SongForm = (props) => {
             <form onSubmit={submitHandler}>
                 <div className={classes.control}>
                     <label htmlFor="title">Title</label>
-                    <input type={"text"} id={"title"} requried autoComplete={"off"} value={title}
+                    <input type={"text"} id={"title"} required autoComplete={"off"} value={title}
                            onChange={titleChangedHandler}/>
                     {titleTouched && titleError && <p>Please enter a valid title</p>}
                 </div>
                 <div className={classes.control}>
                     <label htmlFor="artist">Artist</label>
-                    <input type={"text"} id={"artist"} requried autoComplete={"off"} value={artist}
+                    <input type={"text"} id={"artist"} required autoComplete={"off"} value={artist}
                            onChange={artistChangedHandler}/>
                     {artistTouched && artistError && <p>Please enter a valid artist</p>}
                 </div>
                 <div className={classes.control}>
                     <label htmlFor="album">Album</label>
-                    <input type={"text"} id={"album"} requried autoComplete={"off"} value={album}
+                    <input type={"text"} id={"album"} required autoComplete={"off"} value={album}
                            onChange={albumChangedHandler}/>
                     {albumTouched && albumError && <p>Please enter a valid album</p>}
+                </div>
+                <div className={classes.control}>
+                    <label htmlFor="embedId">Embed Id</label>
+                    <input type={"text"} id={"embedId"} required autoComplete={"off"} value={embedId}
+                           onChange={embedIdChangedHandler}/>
+                    {embedIdTouched && embedIdError && <p>Please enter a valid Embed Id</p>}
                 </div>
                 <div className={classes.actions}>
                     <button>Add</button>

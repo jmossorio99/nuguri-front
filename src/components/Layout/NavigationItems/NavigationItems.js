@@ -13,7 +13,7 @@ const NavigationItems = () => {
             <NavigationItem link="/rank">Rate songs</NavigationItem>
             <NavigationItem link="/profile">Profile</NavigationItem>
             <div className={classes.line}></div>
-            <NavigationItem logout>Sign out</NavigationItem>
+            <NavigationItem logout link="/">Sign out</NavigationItem>
         </ul>
     );
 
