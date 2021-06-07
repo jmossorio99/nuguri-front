@@ -14,6 +14,7 @@ const MusicTable = (props) => {
     const error = useSelector(state => state.song.error);
     const isLoading = useSelector(state => state.song.loading);
     const dispatch = useDispatch();
+    const isProfile = props.prof===1;
 
     const [isOpen, setIsOpen] = useState(false);
     const [embedId, setEmbedId] = useState("");
@@ -30,16 +31,28 @@ const MusicTable = (props) => {
     }, [dispatch, songs.length])
 
     const renderSongs = () => {
-        let list = songs.map((song) => (
-            <tr key={song._id}>
-                <td><img src={youTubeIcon} alt="Play icon" onClick={()=>songClicked(song.embedId)} /></td>
-                <td>{song.name}</td>
-                <td>{song.artist}</td>
-                <td>{song.album}</td>
-                <td>{song.rating}</td>
-                <td>{song.rates}</td>
-            </tr>
-        ));
+        let list;
+        if(!isProfile){
+            list = songs.map((song) => (
+                <tr key={song._id}>
+                    <td><img src={youTubeIcon} alt="Play icon" onClick={()=>songClicked(song.embedId)} /></td>
+                    <td>{song.name}</td>
+                    <td>{song.artist}</td>
+                    <td>{song.album}</td>
+                    <td>{song.rating}</td>
+                    <td>{song.rates}</td>
+                </tr>
+            ));
+        }else{
+            list = songs.map((song) => (
+                <tr key={song._id}>
+                    <td><img src={youTubeIcon} alt="Play icon" onClick={()=>songClicked(song.embedId)} /></td>
+                    <td>{song.name}</td>
+                    <td>{song.artist}</td>
+                    <td>{song.rating}</td>
+                </tr>
+            ));
+        }
         return list;
     }
 
@@ -50,9 +63,9 @@ const MusicTable = (props) => {
                 <th><TitleItem>Youtube</TitleItem></th>
                 <th><TitleItem>Title</TitleItem></th>
                 <th><TitleItem>Artist</TitleItem></th>
-                <th><TitleItem>Album</TitleItem></th>
+                {!isProfile && <th><TitleItem>Album</TitleItem></th>}
                 <th><TitleItem>Rating</TitleItem></th>
-                <th><TitleItem>Rates</TitleItem></th>
+                {!isProfile && <th><TitleItem>Rates</TitleItem></th>}
             </tr>
             </thead>
             <tbody>{renderSongs()}</tbody>
