@@ -17,13 +17,16 @@ const authSlice = createSlice({
             const decodedToken = jwt_decode(action.payload.token);
             state.username = decodedToken.username;
             state.role = decodedToken.role;
+            state.userId = decodedToken._id;
             state.token = action.payload.token;
+            state.error = false;
         },
         login(state, action) {
             const {token, expiresIn: expiration} = action.payload;
             const decodedToken = jwt_decode(token);
             state.username = decodedToken.username;
             state.role = decodedToken.role;
+            state.userId = decodedToken._id;
             state.token = token;
             state.error = false;
             localStorage.setItem("token", token);
@@ -34,6 +37,7 @@ const authSlice = createSlice({
             state.token = null;
             state.username = null;
             state.role = null;
+            state.userId = null;
             state.error = false;
             localStorage.removeItem("token");
             localStorage.removeItem("expiration_date");
