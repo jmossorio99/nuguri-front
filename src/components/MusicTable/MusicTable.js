@@ -49,6 +49,7 @@ const MusicTable = (props) => {
                     <td><img src={youTubeIcon} alt="Play icon" onClick={()=>songClicked(song.embedId)} /></td>
                     <td>{song.name}</td>
                     <td>{song.artist}</td>
+                    <td>{0}</td>
                     <td>{song.rating}</td>
                 </tr>
             ));
@@ -64,7 +65,8 @@ const MusicTable = (props) => {
                 <th><TitleItem>Title</TitleItem></th>
                 <th><TitleItem>Artist</TitleItem></th>
                 {!isProfile && <th><TitleItem>Album</TitleItem></th>}
-                <th><TitleItem>Rating</TitleItem></th>
+                {isProfile && <th><TitleItem>My Rating</TitleItem></th>}
+                <th><TitleItem>Average Rating</TitleItem></th>
                 {!isProfile && <th><TitleItem>Rates</TitleItem></th>}
             </tr>
             </thead>
