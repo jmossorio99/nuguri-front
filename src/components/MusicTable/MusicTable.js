@@ -121,7 +121,7 @@ const MusicTable = (props) => {
                     <td>{song.name}</td>
                     <td>{song.artist}</td>
                     <td>{song.album}</td>
-                    <td>{song.numRatings === 0 ? "N/A" : song.rating}</td>
+                    <td>{song.numRatings === 0 ? "N/A" : song.rating.toFixed(2)}</td>
                     <td>{song.numRatings}</td>
                     {isAdmin && (
                         <div className={classes.actions}>
@@ -142,7 +142,7 @@ const MusicTable = (props) => {
                     <td>{song.name}</td>
                     <td>{song.artist}</td>
                     <td>{song.userRating}</td>
-                    <td>{song.numRatings === 0 ? "N/A" : song.rating}</td>
+                    <td>{song.numRatings === 0 ? "N/A" : song.rating.toFixed(2)}</td>
                 </tr>
             ));
         }
