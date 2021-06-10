@@ -1,12 +1,14 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, Suspense} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 import AuthPage from "./pages/AuthPage";
-import Profile from "./pages/Profile";
-import RatePage from "./pages/RatePage/RatePage";
 import {useDispatch, useSelector} from "react-redux";
 import {authCheckState} from "./store/auth";
+import Spinner from './components/UI/Spinner/Spinner';
+
+const Profile = React.lazy(()=>import("./pages/Profile"));
+const RatePage = React.lazy(()=>import("./pages/RatePage/RatePage"));
 
 const App = () => {
 
@@ -20,18 +22,20 @@ const App = () => {
 
     const loggedInRoutes = (
         <Fragment>
-            <Route path={"/"} exact>
-                <HomePage/>
-            </Route>
-            <Route path={"/profile"}>
-                <Profile/>
-            </Route>
-            <Route path={"/rank"}>
-                <RatePage/>
-            </Route>
-            <Route path={"*"}>
-                <Redirect to={"/"}/>
-            </Route>
+            <Suspense fallback={<Spinner />}>
+                <Route path={"/"} exact>
+                    <HomePage/>
+                </Route>
+                <Route path={"/profile"}>
+                    <Profile/>
+                </Route>
+                <Route path={"/rank"}>
+                    <RatePage/>
+                </Route>
+                <Route path={"*"}>
+                    <Redirect to={"/"}/>
+                </Route>
+            </Suspense>
         </Fragment>
     );
 
