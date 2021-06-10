@@ -7,8 +7,17 @@
     font: inherit;
 }
 
+.ratePage h1 {
+    font-size: 40px;
+}
+
 .inputForm {
     display: flex;
+}
+
+.inputForm img {
+    height: 40px;
+    margin: 12px 20px 0 0;
 }
 
 .inputForm input {

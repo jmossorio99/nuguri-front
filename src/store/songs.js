@@ -44,7 +44,6 @@ export const fetchSongs = () => {
         dispatch(songActions.setLoading(true));
         axios.get("/song")
             .then(res => {
-                console.log(res.data);
                 dispatch(songActions.setSongs(res.data));
                 dispatch(songActions.setError(false));
                 dispatch(songActions.setLoading(false));
@@ -80,8 +79,6 @@ export const fetchRatedSongs = (userId) => {
         axios.get(`/user/ratedSongs/${userId}`)
             .then((res) => {
                 dispatch(songActions.setRatedSongs(res.data));
-                console.log("rated songs");
-                console.log(res.data);
                 dispatch(songActions.setError(false));
                 dispatch(songActions.setLoading(false));
             })
@@ -115,7 +112,6 @@ export const deleteSong = (payload) => {
         dispatch(songActions.setLoading(true));
         axios.delete(`/song/${payload.songId}`)
             .then(res => {
-                console.log(res)
                 dispatch(songActions.setLoading(false));
                 dispatch(songActions.setError(false));
                 dispatch(fetchSongs());

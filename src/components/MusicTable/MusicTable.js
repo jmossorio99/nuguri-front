@@ -14,7 +14,6 @@ const MusicTable = (props) => {
 
     const [showForm, setShowForm] = useState(false);
     const songs = useSelector(state => state.song.songs);
-    const searchSongs = useSelector(state => state.song.searchSongs);
     const ratedSongs = useSelector(state => state.song.ratedSongs);
     const error = useSelector(state => state.song.error);
     const isLoading = useSelector(state => state.song.loading);
@@ -52,7 +51,6 @@ const MusicTable = (props) => {
 
     const sort = (notSortedList) => {
         const list = [...notSortedList];
-        console.log(list);
         if (filterState === 0) {
             return list;
         }
@@ -94,6 +92,17 @@ const MusicTable = (props) => {
         }
     }
 
+    const filterName = (list) => {
+        const filteredList = [];
+        const {songName} = props;
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].name.toUpperCase().includes(songName.toUpperCase())) {
+                filteredList.push(list[i]);
+            }
+        }
+        return filteredList;
+    }
+
     const onRateClickedHandler = (songId, rating) => {
         if (rating < 1 || rating > 10) {
             setRateFormError(true);
@@ -132,6 +141,16 @@ const MusicTable = (props) => {
                 </tr>
             ));
         }
+        if (props.isRatingPage) {
+            list = sort(filterName(songs)).map((song) => (
+                <tr key={song._id}>
+                    <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
+                    <td>{song.name}</td>
+                    <td>{song.artist}</td>
+                    <SongRateForm song={song} onRateClicked={onRateClickedHandler}/>
+                </tr>
+            ));
+        }
     }
 
     if (ratedSongs.length > 0) {
@@ -143,19 +162,6 @@ const MusicTable = (props) => {
                     <td>{song.artist}</td>
                     <td>{song.userRating}</td>
                     <td>{song.numRatings === 0 ? "N/A" : song.rating.toFixed(2)}</td>
-                </tr>
-            ));
-        }
-    }
-
-    if (searchSongs.length > 0) {
-        if (props.isRatingPage) {
-            list = sort(searchSongs).map((song) => (
-                <tr key={song._id}>
-                    <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
-                    <td>{song.name}</td>
-                    <td>{song.artist}</td>
-                    <SongRateForm song={song} onRateClicked={onRateClickedHandler}/>
                 </tr>
             ));
         }
