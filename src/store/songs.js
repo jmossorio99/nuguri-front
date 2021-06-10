@@ -4,7 +4,9 @@ import axios from "../axios";
 const initialState = {
     songs: [],
     error: false,
-    loading: false
+    loading: false,
+    rateSuccess: false,
+    rateError: false
 }
 
 const songsSlice = createSlice({
@@ -19,6 +21,12 @@ const songsSlice = createSlice({
         },
         setLoading(state, action) {
             state.loading = action.payload;
+        },
+        setRateError(state, action) {
+            state.rateError = action.payload;
+        },
+        setRateSuccess(state, action) {
+            state.rateSuccess = action.payload;
         }
     }
 });
@@ -37,6 +45,23 @@ export const fetchSongs = () => {
                 console.log(err);
                 dispatch(songActions.setError(true));
                 dispatch(songActions.setLoading(false));
+            })
+    }
+}
+
+export const rateSong = (payload) => {
+    return dispatch => {
+        dispatch(songActions.setLoading(true));
+        axios.post(`/song/rate/${payload.songId}`, {userId: payload.userId, value: payload.rating})
+            .then(res => {
+                dispatch(songActions.setLoading(false));
+                dispatch(songActions.setRateError(false));
+                dispatch(songActions.setRateSuccess(true));
+            })
+            .catch(err => {
+                dispatch(songActions.setLoading(false));
+                dispatch(songActions.setRateError(true));
+                dispatch(songActions.setRateSuccess(false));
             })
     }
 }

@@ -39,3 +39,37 @@
 .content-table thead th{
     border-bottom: 1px solid #ffffff;
 }
+
+.ratingButton {
+    border-radius: 15px;
+    background-color: #232931;
+    color: white;
+    border: transparent;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.ratingButton:hover {
+    background-color: #2d333e;
+}
+
+.ratingInput {
+    border-radius: 10px;
+    border: 1px #4ECCA3 solid;
+    background-color: #393E46;
+    width: 22px;
+    color: white;
+    padding: 8px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

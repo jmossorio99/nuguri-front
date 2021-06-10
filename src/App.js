@@ -4,7 +4,7 @@ import Layout from "./components/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 import AuthPage from "./pages/AuthPage";
 import Profile from "./pages/Profile";
-import RankPage from "./pages/RankPage";
+import RatePage from "./pages/RatePage/RatePage";
 import {useDispatch, useSelector} from "react-redux";
 import {authCheckState} from "./store/auth";
 
@@ -27,7 +27,7 @@ const App = () => {
                 <Profile/>
             </Route>
             <Route path={"/rank"}>
-                <RankPage/>
+                <RatePage/>
             </Route>
             <Route path={"*"}>
                 <Redirect to={"/"}/>

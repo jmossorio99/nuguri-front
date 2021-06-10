@@ -1,0 +1,41 @@
+.ratePage {
+    text-align: center;
+    margin: auto;
+    width: 95%;
+    max-width: 40rem;
+    padding: 1rem;
+    font: inherit;
+}
+
+.inputForm {
+    display: flex;
+}
+
+.inputForm input {
+    font: inherit;
+    background-color: #393E46;
+    color: white;
+    border-radius: 40px;
+    border: transparent;
+    height: 50px;
+    width: 80%;
+    text-align: left;
+    padding: 0.25rem 30px;
+    font-size: 15px;
+}
+
+.inputForm button {
+    font: inherit;
+    background-color: transparent;
+    border-radius: 40px;
+    border: 2px #393E46 solid;
+    color: #393E46;
+    font-size: 20px;
+    padding: 10px 50px;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.inputForm button:hover {
+    background-color: #cccccc;
+}
