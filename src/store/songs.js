@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import axios from "../axios";
 
+//initial state for songs.js which contains variables for the state of actions like rate success and loading to set the spinner while loading. Also it contains arrays like songs which have all songs saved in the app and ratedSongs which have songs that were rated by the logged user
 const initialState = {
     songs: [],
     error: false,
@@ -11,6 +12,7 @@ const initialState = {
     searchSongs: []
 }
 
+//set methods to the variables of the state 
 const songsSlice = createSlice({
     name: "songs",
     initialState,
@@ -39,6 +41,7 @@ const songsSlice = createSlice({
     }
 });
 
+// request to the backend all songs saved in the database(/song), changing state variables if it was an error or if it is loading
 export const fetchSongs = () => {
     return dispatch => {
         dispatch(songActions.setLoading(true));
@@ -56,6 +59,7 @@ export const fetchSongs = () => {
     }
 }
 
+// Not needed right
 export const fetchSearchSongs = (songName) => {
     return dispatch => {
         dispatch(songActions.setLoading(true));
@@ -73,6 +77,8 @@ export const fetchSearchSongs = (songName) => {
     }
 }
 
+// request songs that are beeing rated by the specified user
+// @param userId - the userId which rated songs are going to be search
 export const fetchRatedSongs = (userId) => {
     return dispatch => {
         dispatch(songActions.setLoading(true));
@@ -90,6 +96,8 @@ export const fetchRatedSongs = (userId) => {
     }
 }
 
+//request to save a rate to a song
+//@param payload - it have songId, userId and rate given
 export const rateSong = (payload) => {
     return dispatch => {
         dispatch(songActions.setLoading(true));
@@ -107,6 +115,8 @@ export const rateSong = (payload) => {
     }
 }
 
+//request to delete a song
+//@param payload it have songId to be deleted
 export const deleteSong = (payload) => {
     return dispatch => {
         dispatch(songActions.setLoading(true));
