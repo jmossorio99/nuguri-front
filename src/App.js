@@ -12,12 +12,15 @@ const RatePage = React.lazy(()=>import("./pages/RatePage/RatePage"));
 
 const App = () => {
 
+    // call an action of redux
     const dispatch = useDispatch();
 
+    // When state changed call authCheckState to check authentication state (token exist or not in localstorage)
     useEffect(() => {
         dispatch(authCheckState());
     }, [dispatch])
 
+    // Save store.auth value of token in this local variable
     const isLoggedIn = useSelector(state => state.auth.token !== null);
 
     const loggedInRoutes = (
