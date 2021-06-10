@@ -4,6 +4,7 @@ import headphonesIcon from "../../assets/headphones-icon.svg";
 import addUser from "../../assets/addUser.png";
 import {sendAuthRequest} from "../../store/auth";
 import classes from "./AuthForm.module.css";
+import Spinner from "../UI/Spinner/Spinner";
 
 const AuthForm = () => {
 
@@ -15,6 +16,7 @@ const AuthForm = () => {
     const [passwordError, setPasswordError] = useState(true);
     const [passwordTouched, setPasswordTouched] = useState(false);
     const error = useSelector(state => state.auth.error);
+    const isLoading = useSelector(state => state.auth.isLoading);
     const formIsValid = !passwordError && !usernameError;
     const dispatch = useDispatch();
 
@@ -58,11 +60,11 @@ const AuthForm = () => {
             {isLogin ? <img src={headphonesIcon} alt={"logo"} /> : <img src={addUser} alt={"logo"} />}
             <h1>{isLogin ? "Login" : "Sign Up"}</h1>
             {error && <p>Please check your credentials</p>}
-            <form>
+            {isLoading ? <Spinner /> : <form>
                 <div className={classes.control}>
                     <label htmlFor="username">Username</label>
                     <input type={"text"} id={"username"} required value={username} onChange={usernameChangeHandler}
-                    placeholder={"Username"} autoComplete={"off"}/>
+                           placeholder={"Username"} autoComplete={"off"}/>
                     {usernameError && usernameTouched && <p>Username must be at least 3 characters long</p>}
                 </div>
                 <div className={classes.control}>
@@ -81,7 +83,7 @@ const AuthForm = () => {
                         {isLogin ? "Create new account" : "Login with existing account"}
                     </button>
                 </div>
-            </form>
+            </form>}
         </section>
     );
 };

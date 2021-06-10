@@ -7,7 +7,8 @@ const initialState = {
     username: null,
     role: null,
     error: false,
-    userId: null
+    userId: null,
+    isLoading: false
 }
 
 const authSlice = createSlice({
@@ -45,6 +46,9 @@ const authSlice = createSlice({
         },
         error(state, action) {
             state.error = action.payload;
+        },
+        setIsLoading(state, action) {
+            state.isLoading = action.payload;
         }
     }
 });
@@ -52,6 +56,7 @@ const authSlice = createSlice({
 export const sendAuthRequest = (payload) => {
     const isLogin = payload.isLogin;
     return (dispatch) => {
+        dispatch(authActions.setIsLoading(true));
         const userData = {
             username: payload.username,
             password: payload.password
@@ -61,6 +66,7 @@ export const sendAuthRequest = (payload) => {
         }
         axios.post(`/auth/${isLogin ? "login" : "signup"}`, userData)
             .then(res => {
+                dispatch(authActions.setIsLoading(false));
                 console.log(res.data)
                 setTimeout(() => {
                     dispatch(authActions.logout());
@@ -68,6 +74,7 @@ export const sendAuthRequest = (payload) => {
                 dispatch(authActions.login(res.data));
             })
             .catch(err => {
+                dispatch(authActions.setIsLoading(false));
                 dispatch(authActions.error(err));
             });
     };
