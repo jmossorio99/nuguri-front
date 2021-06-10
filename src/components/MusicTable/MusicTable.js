@@ -24,6 +24,7 @@ const MusicTable = (props) => {
     const isProfile = props.prof;
     const [isOpen, setIsOpen] = useState(false);
     const [embedId, setEmbedId] = useState("");
+    const [filterState, setFilterState] = useState(0);
 
     function songClicked(embedId) {
         setEmbedId(embedId);
@@ -35,6 +36,50 @@ const MusicTable = (props) => {
             dispatch(songActions.setSearchSongs([]));
             if(isProfile) dispatch(fetchRatedSongs(userId));
     }, [dispatch, userId, isProfile])
+
+    const sort = (notSortedList) => {
+        const list = [...notSortedList];
+        console.log(list);
+        if(filterState === 0){
+            return list;
+        } 
+        if(filterState === 1){
+            return list.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1); 
+        }
+        if(filterState === 2){
+            return list.sort((a, b) => a.name.toUpperCase() < b.name.toUpperCase() ? 1 : -1); 
+        }
+        if(filterState === 3){
+            return list.sort((a, b) => a.artist.toUpperCase() > b.artist.toUpperCase() ? 1 : -1); 
+        }
+        if(filterState === 4){
+            return list.sort((a, b) => a.artist.toUpperCase() < b.artist.toUpperCase() ? 1 : -1); 
+        }
+        if(filterState === 5){
+            return list.sort((a, b) => a.album.toUpperCase() > b.album.toUpperCase() ? 1 : -1); 
+        }
+        if(filterState === 6){
+            return list.sort((a, b) => a.album.toUpperCase() < b.album.toUpperCase() ? 1 : -1); 
+        }
+        if(filterState === 7){
+            return list.sort((a, b) => a.userRating < b.userRating ? 1 : -1); 
+        }
+        if(filterState === 8){
+            return list.sort((a, b) => a.userRating > b.userRating ? 1 : -1); 
+        }
+        if(filterState === 9){
+            return list.sort((a, b) => a.rating < b.rating ? 1 : -1); 
+        }
+        if(filterState === 10){
+            return list.sort((a, b) => a.rating > b.rating ? 1 : -1); 
+        }
+        if(filterState === 11){
+            return list.sort((a, b) => a.numRatings < b.numRatings ? 1 : -1); 
+        }
+        if(filterState === 12){
+            return list.sort((a, b) => a.numRatings > b.numRatings ? 1 : -1); 
+        }
+    }
 
     const onRateClickedHandler = (songId, rating) => {
         if (rating < 1 || rating > 10) {
@@ -49,52 +94,129 @@ const MusicTable = (props) => {
         dispatch(songActions.setRateSuccess(false))
     }
 
-    let list = songs.map((song) => (
-        <tr key={song._id}>
-            <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
-            <td>{song.name}</td>
-            <td>{song.artist}</td>
-            <td>{song.album}</td>
-            <td>{song.rating}</td>
-            <td>{song.numRatings}</td>
-        </tr>
-    ));
-
-    if (isProfile) {
-        list = ratedSongs.map((song) => (
-            <tr key={song.songId}>
-                <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
-                <td>{song.name}</td>
-                <td>{song.artist}</td>
-                <td>{song.userRating}</td>
-                <td>{song.rating}</td>
-            </tr>
-        ));
-    }
-
-    if (props.isRatingPage) {
-        list = searchSongs.map((song) => (
+    let list=null;
+    if(songs.length>0){
+        if(!isProfile && !props.isRatingPage){
+            const sortedSongs = sort(songs);
+            list = sortedSongs.map((song) => (
             <tr key={song._id}>
                 <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
                 <td>{song.name}</td>
                 <td>{song.artist}</td>
-                <SongRateForm song={song} onRateClicked={onRateClickedHandler}/>
+                <td>{song.album}</td>
+                <td>{song.rating}</td>
+                <td>{song.numRatings}</td>
             </tr>
         ));
+        }
+    }
+    
+    if(ratedSongs.length>0){
+        if (isProfile) {
+            list = sort(ratedSongs).map((song) => (
+                <tr key={song.songId}>
+                    <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
+                    <td>{song.name}</td>
+                    <td>{song.artist}</td>
+                    <td>{song.userRating}</td>
+                    <td>{song.rating}</td>
+                </tr>
+            ));
+        }
+    }
+
+    if(searchSongs.length>0){
+        if (props.isRatingPage) {
+            list = sort(searchSongs).map((song) => (
+                <tr key={song._id}>
+                    <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
+                    <td>{song.name}</td>
+                    <td>{song.artist}</td>
+                    <SongRateForm song={song} onRateClicked={onRateClickedHandler}/>
+                </tr>
+            ));
+        }
+    }
+
+    const manageFilter = (id) =>{
+        switch(id) {
+            case 'title':
+                if(filterState === 1){
+                    setFilterState(2);
+                }else if(filterState === 2){
+                    setFilterState(0);
+                }
+                else{
+                    setFilterState(1);
+                }
+                break;
+            case 'artist':
+                if(filterState === 3){
+                    setFilterState(4);
+                }else if(filterState === 4){
+                    setFilterState(0);
+                }
+                else{
+                    setFilterState(3);
+                }
+                break;
+            case 'album':
+                if(filterState === 5){
+                    setFilterState(6);
+                }else if(filterState === 6){
+                    setFilterState(0);
+                }
+                else{
+                    setFilterState(5);
+                }
+                break;
+            case 'my':
+                if(filterState === 7){
+                    setFilterState(8);
+                }else if(filterState === 8){
+                    setFilterState(0);
+                }
+                else{
+                    setFilterState(7);
+                }
+                break;
+            case 'rating':
+                if(filterState === 9){
+                    setFilterState(10);
+                }else if(filterState === 10){
+                    setFilterState(0);
+                }
+                else{
+                    setFilterState(9);
+                }
+                break;
+            case 'rates':
+                if(filterState === 11){
+                    setFilterState(12);
+                }else if(filterState === 12){
+                    setFilterState(0);
+                }
+                else{
+                    setFilterState(11);
+                }
+                break;
+            default:
+                setFilterState(0);
+        }
     }
 
     let songList = (
         <table className={classes["content-table"]}>
             <thead>
             <tr>
-                <th><TitleItem>Youtube</TitleItem></th>
-                <th><TitleItem>Title</TitleItem></th>
-                <th><TitleItem>Artist</TitleItem></th>
-                {!isProfile && !props.isRatingPage && <th><TitleItem>Album</TitleItem></th>}
-                {isProfile && <th><TitleItem>My Rating</TitleItem></th>}
-                {!props.isRatingPage && <th><TitleItem>Average Rating</TitleItem></th>}
-                {!isProfile && !props.isRatingPage && <th><TitleItem>Rates</TitleItem></th>}
-                {props.isRatingPage && <th style={{color: "#4ECCA3"}}>Rate</th>}
+                <th><h5 style={{margin: "10px 0 0 0"}}>Youtube</h5></th>
+                <th><TitleItem onClick={()=>manageFilter('title')}>Title {filterState === 1 ? '▼' : filterState === 2 ? '▲' : null}</TitleItem></th>
+                <th><TitleItem onClick={()=>manageFilter('artist')}>Artist {filterState === 3 ? '▼' : filterState === 4 ? '▲' : null}</TitleItem></th>
+                {!isProfile && !props.isRatingPage && <th><TitleItem onClick={()=>manageFilter('album')}>Album {filterState === 5 ? '▼' : filterState === 6 ? '▲' : null}</TitleItem></th>}
+                {isProfile && <th><TitleItem onClick={()=>manageFilter('my')}>My Rating {filterState === 7 ? '▼' : filterState === 8 ? '▲' : null}</TitleItem></th>}
+                {!props.isRatingPage && <th><TitleItem onClick={()=>manageFilter('rating')}>Average Rating {filterState === 9 ? '▼' : filterState === 10 ? '▲' : null}</TitleItem></th>}
+                {!isProfile && !props.isRatingPage && <th><TitleItem onClick={()=>manageFilter('rates')}>Rates {filterState === 11 ? '▼' : filterState === 12 ? '▲' : null}</TitleItem></th>}
+                {props.isRatingPage && <th><h5 style={{color: "#4ECCA3", margin: "10px 0 0 0"}}>Rate</h5></th>}
                 {props.isRatingPage && <th style={{color: "#393E46"}}>Placeholder</th>}
             </tr>
             </thead>

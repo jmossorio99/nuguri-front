@@ -54,6 +54,7 @@ const AuthForm = () => {
 
     return (
         <section className={classes.auth}>
+            <h1>Welcome to SongRanker</h1>
             {isLogin ? <img src={headphonesIcon} alt={"logo"} /> : <img src={addUser} alt={"logo"} />}
             <h1>{isLogin ? "Login" : "Sign Up"}</h1>
             {error && <p>Please check your credentials</p>}

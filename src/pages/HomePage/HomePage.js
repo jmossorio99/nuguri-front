@@ -19,8 +19,9 @@ const HomePage = () => {
 
     return (
         <div className={classes.homePage}>
+            <h1>Welcome to SongRanker</h1>
             {isAdmin ? <h2>Admin Dashboard</h2> : <h2>Start Discovering New Music</h2>}
-            <h3>Sort by</h3>
+            <h4>Click on a table header to sort!</h4>
             <MusicTable />
             {isAdmin && <button onClick={showFormHandler}>+ Add song</button>}
             {showForm && <SongForm onBackdropClick={hideFormHandler}/>}
