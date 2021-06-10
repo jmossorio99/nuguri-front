@@ -6,7 +6,8 @@ const initialState = {
     error: false,
     loading: false,
     rateSuccess: false,
-    rateError: false
+    rateError: false,
+    searchSongs: []
 }
 
 const songsSlice = createSlice({
@@ -15,6 +16,9 @@ const songsSlice = createSlice({
     reducers: {
         setSongs(state, action) {
             state.songs = action.payload;
+        },
+        setSearchSongs(state, action) {
+            state.searchSongs = action.payload;
         },
         setError(state, action) {
             state.error = action.payload;
@@ -38,6 +42,23 @@ export const fetchSongs = () => {
             .then(res => {
                 console.log(res.data);
                 dispatch(songActions.setSongs(res.data));
+                dispatch(songActions.setError(false));
+                dispatch(songActions.setLoading(false));
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(songActions.setError(true));
+                dispatch(songActions.setLoading(false));
+            })
+    }
+}
+
+export const fetchSearchSongs = (songName) => {
+    return dispatch => {
+        dispatch(songActions.setLoading(true));
+        axios.get(`/song/findByName/${songName}`)
+            .then(res => {
+                dispatch(songActions.setSearchSongs(res.data));
                 dispatch(songActions.setError(false));
                 dispatch(songActions.setLoading(false));
             })

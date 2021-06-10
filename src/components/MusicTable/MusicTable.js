@@ -12,6 +12,7 @@ import SongRateForm from "./SongRateForm/SongRateForm";
 const MusicTable = (props) => {
 
     const songs = useSelector(state => state.song.songs);
+    const searchSongs = useSelector(state => state.song.searchSongs)
     const error = useSelector(state => state.song.error);
     const isLoading = useSelector(state => state.song.loading);
     const userId = useSelector(state => state.auth.userId);
@@ -31,6 +32,7 @@ const MusicTable = (props) => {
 
     useEffect(() => {
             dispatch(fetchSongs());
+            dispatch(songActions.setSearchSongs([]));
     }, [dispatch])
 
     const onRateClickedHandler = (songId, rating) => {
@@ -70,7 +72,7 @@ const MusicTable = (props) => {
     }
 
     if (props.isRatingPage) {
-        list = songs.map((song) => (
+        list = searchSongs.map((song) => (
             <tr key={song._id}>
                 <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
                 <td>{song.name}</td>

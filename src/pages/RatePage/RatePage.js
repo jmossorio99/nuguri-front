@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import classes from "./RatePage.module.css";
 import MusicTable from "../../components/MusicTable/MusicTable";
+import {useDispatch} from "react-redux";
+import {fetchSearchSongs} from "../../store/songs";
 
 const RatePage = () => {
 
     const [songName, setSongName] = useState("");
+    const dispatch = useDispatch();
 
     const songNameChangeHandler = (event) => {
         const newName = event.target.value;
@@ -13,7 +16,7 @@ const RatePage = () => {
 
     const searchClickedHandler = () => {
         if (songName.trim().length > 0){
-            console.log(songName)
+            dispatch(fetchSearchSongs(songName));
         }
     };
 
