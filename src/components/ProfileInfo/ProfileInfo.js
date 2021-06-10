@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import classes from "./ProfileInfo.module.css";
 import MusicTable from "../MusicTable/MusicTable";
 
+// This component renders the profile information of the current logged in user
 function ProfileInfo() {
 
     const username = useSelector(state => state.auth.username);

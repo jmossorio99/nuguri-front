@@ -10,6 +10,8 @@ import youTubeIcon from "../../assets/youtubeIcon.svg";
 import SongRateForm from "./SongRateForm/SongRateForm";
 import SongForm from "../SongForm/SongForm";
 
+// This components renders the tables which are shown on the HomePage, Profile and RatingPage.
+// It also handles deleting and editing a song through a button and a form respectively.
 const MusicTable = (props) => {
 
     const [showForm, setShowForm] = useState(false);
@@ -29,16 +31,22 @@ const MusicTable = (props) => {
     const isAdmin = useSelector(state => state.auth.role) === "admin";
     const [editingSong, setEditingSong] = useState(null);
 
+    // Triggered when the YouTube icon of a song is clicked.
+    // It sets the current embedId to the song which was clicked.
+    // @param embedId: the embedId of the clicked song.
     function songClicked(embedId) {
         setEmbedId(embedId);
         setIsOpen(true);
     }
 
+    // Shows the form for editing a song
+    // @param song: song with the previous data to edit
     const showFormHandler = (song) => {
         setEditingSong(song);
         setShowForm(true);
     }
 
+    // Hides the editing form handler
     const hideFormHandler = () => {
         setShowForm(false);
     }
@@ -49,6 +57,9 @@ const MusicTable = (props) => {
         if (isProfile) dispatch(fetchRatedSongs(userId));
     }, [dispatch, userId, isProfile])
 
+    // Sorts a list depending on the current filterState
+    // @param notSortedList: list to sort
+    // @return filteredList: sorted list
     const sort = (notSortedList) => {
         const list = [...notSortedList];
         if (filterState === 0) {
@@ -92,6 +103,9 @@ const MusicTable = (props) => {
         }
     }
 
+    // Handles name filtering according to the song name typed by the user
+    // @param list: the list to filter
+    // @return filteredList: the filtered list
     const filterName = (list) => {
         const filteredList = [];
         const {songName} = props;
@@ -103,6 +117,9 @@ const MusicTable = (props) => {
         return filteredList;
     }
 
+    // Handles clicks on the rate button of a song
+    // @param songId: the id of the song to rate
+    // @param rating: the rating of the song
     const onRateClickedHandler = (songId, rating) => {
         if (rating < 1 || rating > 10) {
             setRateFormError(true);
@@ -112,10 +129,13 @@ const MusicTable = (props) => {
         dispatch(rateSong({songId, userId, rating}));
     }
 
+    // Closes the success modal which shows when a song is rated
     const closeSuccessModal = () => {
         dispatch(songActions.setRateSuccess(false))
     }
 
+    // Handles deletion of a song
+    // @param songId: the id of the song to be deleted
     const onDeleteSongClicked = (songId) => {
         dispatch(deleteSong({songId}))
     }
@@ -167,6 +187,8 @@ const MusicTable = (props) => {
         }
     }
 
+    // This handles clicks on each of the table headers in order to change which filter is being applied
+    // @param id: the id of the header clicked
     const manageFilter = (id) => {
         switch (id) {
             case 'title':

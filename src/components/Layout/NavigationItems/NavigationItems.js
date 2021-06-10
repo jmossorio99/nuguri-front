@@ -3,6 +3,7 @@ import classes from "./NavigationItems.module.css";
 import NavigationItem from "./NavigationItem/NavigationItem";
 import {useSelector} from "react-redux";
 
+// Component to render a set of navigation items. Each navigation item has a link.
 const NavigationItems = () => {
 
     const isLoggedIn = useSelector(state => state.auth.token !== null);

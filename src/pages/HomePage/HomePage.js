@@ -4,15 +4,18 @@ import MusicTable from "../../components/MusicTable/MusicTable";
 import classes from "./HomePage.module.css";
 import {useSelector} from "react-redux";
 
+// Wrapper component which renders the HomePage elements
 const HomePage = () => {
 
     const [showForm, setShowForm] = useState(false);
     const isAdmin = useSelector(state => state.auth.role) === "admin";
 
+    // Shows the SongForm
     const showFormHandler = () => {
         setShowForm(true);
     }
 
+    // Hides the SongForm
     const hideFormHandler = () => {
         setShowForm(false);
     }

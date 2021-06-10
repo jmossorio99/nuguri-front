@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import classes from "../MusicTable.module.css";
 
+// Form for the rating of a song. Handles the rating input and triggers a callback function when the rate button
+// is clicked. That function is passed by props from a parent component.
 const SongRateForm = (props) => {
 
     const [rate, setRate] = useState("");

@@ -6,6 +6,8 @@ import {sendAuthRequest} from "../../store/auth";
 import classes from "./AuthForm.module.css";
 import Spinner from "../UI/Spinner/Spinner";
 
+// This component handles the input of the user credentials and dispatches an action which sends them to the backend
+// server
 const AuthForm = () => {
 
     const [isLogin, setIsLogin] = useState(true);
@@ -20,6 +22,8 @@ const AuthForm = () => {
     const formIsValid = !passwordError && !usernameError;
     const dispatch = useDispatch();
 
+    // Handles changes in the username
+    // @param event: the event that triggered this function, in this case an input field
     const usernameChangeHandler = (event) => {
         const newValue = event.target.value;
         setUsernameTouched(true);
@@ -27,6 +31,8 @@ const AuthForm = () => {
         setUsernameError(newValue.trim().length < 3);
     }
 
+    // Handles changes in the password
+    // @param event: the event that triggered this function, in this case an input field
     const passwordChangeHandler = (event) => {
         const newValue = event.target.value;
         setPasswordTouched(true);
@@ -34,6 +40,8 @@ const AuthForm = () => {
         setPasswordError(newValue.trim().length < 8);
     }
 
+    // Handles submission of the form
+    // @param event: the event that triggered this function, in this case a button
     const submitHandler = (event) => {
         event.preventDefault()
         const payload = {
@@ -44,6 +52,7 @@ const AuthForm = () => {
         dispatch(sendAuthRequest(payload));
     }
 
+    // Toggles between login and signup mode
     const toggleAuthModeHandler = () => {
         setUsernameTouched(false);
         setPasswordTouched(false);

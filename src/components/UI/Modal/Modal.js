@@ -14,6 +14,7 @@ const ModalOverlay = (props) => {
 
 const portalElement = document.getElementById("overlays");
 
+// Renders a modal with a backdrop
 const Modal = (props) => {
     return (
         <Fragment>

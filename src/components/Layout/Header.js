@@ -3,6 +3,7 @@ import headphonesIcon from "../../assets/headphones-iconWhite.svg";
 import classes from "./Header.module.css";
 import NavigationItems from "./NavigationItems/NavigationItems";
 
+// Header component for the navigation of the web app
 const Header = () => {
     return (
         <Fragment>

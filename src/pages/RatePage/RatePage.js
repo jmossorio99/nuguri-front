@@ -3,10 +3,13 @@ import classes from "./RatePage.module.css";
 import MusicTable from "../../components/MusicTable/MusicTable";
 import loupe from "../../assets/loupe.png";
 
+// Wrapping component to show the RatePage elemenets
 const RatePage = () => {
 
     const [songName, setSongName] = useState("");
 
+    // Handles changes in the current songName to be searched
+    // @param event: the input that triggered the change
     const songNameChangeHandler = (event) => {
         const newName = event.target.value;
         setSongName(newName);

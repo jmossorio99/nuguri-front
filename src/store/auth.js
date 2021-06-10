@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import axios from "../axios";
 import jwt_decode from "jwt-decode";
 
+// Initial state for the Auth state slice
 const initialState = {
     token: null,
     username: null,
@@ -11,6 +12,7 @@ const initialState = {
     isLoading: false
 }
 
+// Creates the state slice for Auth
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -53,6 +55,8 @@ const authSlice = createSlice({
     }
 });
 
+// Sends login or sign up request to the backend server
+// @param payload: user credentials
 export const sendAuthRequest = (payload) => {
     const isLogin = payload.isLogin;
     return (dispatch) => {
@@ -80,6 +84,7 @@ export const sendAuthRequest = (payload) => {
     };
 };
 
+// Checks if there is a saved token to automatically log the user in
 export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem("token");

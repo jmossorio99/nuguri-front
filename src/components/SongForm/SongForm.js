@@ -6,6 +6,7 @@ import Spinner from "../UI/Spinner/Spinner";
 import {fetchSongs} from "../../store/songs";
 import {useDispatch} from "react-redux";
 
+// This component handles the adding and editing of a song capturing all the necessary information
 const SongForm = (props) => {
 
     // State slices for handling entered data, errors and overall form validation
@@ -30,6 +31,7 @@ const SongForm = (props) => {
     const [error, setError] = useState(false);
 
     // On change listener for title
+    // @param event: event which triggers the change
     const titleChangedHandler = (event) => {
         const newValue = event.target.value;
         setTitleTouched(true);
@@ -37,6 +39,7 @@ const SongForm = (props) => {
     }
 
     // On change listener for artist
+    // @param event: event which triggers the change
     const artistChangedHandler = (event) => {
         const newValue = event.target.value;
         setArtistTouched(true);
@@ -44,6 +47,7 @@ const SongForm = (props) => {
     }
 
     // On change listener for album
+    // @param event: event which triggers the change
     const albumChangedHandler = (event) => {
         const newValue = event.target.value;
         setAlbumTouched(true);
@@ -51,6 +55,7 @@ const SongForm = (props) => {
     }
 
     // On change listener for embedId
+    // @param event: event which triggers the change
     const embedIdChangedHandler = (event) => {
         const newValue = event.target.value;
         setEmbedIdTouched(true);
@@ -58,6 +63,7 @@ const SongForm = (props) => {
     }
 
     // This method handlers the submission of the form
+    // @param event: event which triggers the submission of the form
     const submitHandler = (event) => {
         event.preventDefault()
         setTitleTouched(true);

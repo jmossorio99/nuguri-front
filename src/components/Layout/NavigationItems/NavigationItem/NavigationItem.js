@@ -4,10 +4,12 @@ import {NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {authActions} from "../../../../store/auth";
 
+// Simple component to render a single navigation item
 const NavigationItem = (props) => {
 
     const dispatch = useDispatch();
 
+    // Handles a click on the logout button
     const logoutHandler = () => {
         dispatch(authActions.logout());
     }
