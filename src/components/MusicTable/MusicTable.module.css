@@ -53,6 +53,27 @@
     background-color: #2d333e;
 }
 
+.actions {
+    padding: 10px 50px;
+    margin: 10px 0 0 0;
+}
+
+.actions button {
+    background-color: #232931;
+    color: white;
+    border-radius: 20px;
+    border-color: transparent;
+    font-size: 15px;
+    width: 80px;
+    height: 35px;
+    margin: 0 5px;
+}
+
+.actions button:hover {
+    background-color: #293039;
+    cursor: pointer;
+}
+
 .ratingInput {
     border-radius: 10px;
     border: 1px #4ECCA3 solid;

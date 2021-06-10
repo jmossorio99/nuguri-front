@@ -9,16 +9,16 @@ import {useDispatch} from "react-redux";
 const SongForm = (props) => {
 
     // State slices for handling entered data, errors and overall form validation
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(props.isEdit ? props.title : "");
     const [titleTouched, setTitleTouched] = useState(false);
     const titleError = title.trim().length <= 0;
-    const [artist, setArtist] = useState("");
+    const [artist, setArtist] = useState(props.isEdit ? props.artist : "");
     const [artistTouched, setArtistTouched] = useState(false);
     const artistError = artist.trim().length <= 0;
-    const [album, setAlbum] = useState("");
+    const [album, setAlbum] = useState(props.isEdit ? props.album : "");
     const [albumTouched, setAlbumTouched] = useState(false);
     const albumError = album.trim().length <= 0;
-    const [embedId, setEmbedId] = useState("");
+    const [embedId, setEmbedId] = useState(props.isEdit ? props.embedId : "");
     const [embedIdTouched, setEmbedIdTouched] = useState(false);
     const embedIdError = embedId.trim().length <= 0;
     const formIsValid = !(titleError || artistError || albumError || embedIdError);
@@ -72,22 +72,35 @@ const SongForm = (props) => {
                 album,
                 embedId
             }
-            axios.post("/song", songData)
-                .then(res => {
-                    setLoading(false);
-                    props.onBackdropClick();
-                    dispatch(fetchSongs());
-                })
-                .catch(err => {
-                    setLoading(false);
-                    setError(true);
-                });
+            if (props.isEdit) {
+                axios.put(`/song/${props.songId}`, songData)
+                    .then(res => {
+                        setLoading(false);
+                        props.onBackdropClick();
+                        dispatch(fetchSongs());
+                    })
+                    .catch(err => {
+                        setLoading(false);
+                        setError(true);
+                    });
+            } else {
+                axios.post("/song", songData)
+                    .then(res => {
+                        setLoading(false);
+                        props.onBackdropClick();
+                        dispatch(fetchSongs());
+                    })
+                    .catch(err => {
+                        setLoading(false);
+                        setError(true);
+                    });
+            }
         }
     }
 
     let form = (
         <section>
-            <h2>Add a new song</h2>
+            {props.isEdit ? <h2>Edit a song</h2> : <h2>Add a new song</h2>}
             <div className={classes.separator}/>
             <form onSubmit={submitHandler}>
                 <div className={classes.control}>
@@ -115,7 +128,7 @@ const SongForm = (props) => {
                     {embedIdTouched && embedIdError && <p>Please enter a valid Embed Id</p>}
                 </div>
                 <div className={classes.actions}>
-                    <button>Add</button>
+                    <button>{props.isEdit ? "Save" : "Add"}</button>
                 </div>
             </form>
         </section>
@@ -126,7 +139,7 @@ const SongForm = (props) => {
     }
 
     if (loading) {
-        form = <Spinner />
+        form = <Spinner/>
     }
 
     return (

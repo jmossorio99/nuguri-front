@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import headphonesIcon from "../../assets/headphones-icon.svg";
+import headphonesIcon from "../../assets/headphones-iconWhite.svg";
 import classes from "./Header.module.css";
 import NavigationItems from "./NavigationItems/NavigationItems";
 

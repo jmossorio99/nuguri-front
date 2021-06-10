@@ -110,5 +110,23 @@ export const rateSong = (payload) => {
     }
 }
 
+export const deleteSong = (payload) => {
+    return dispatch => {
+        dispatch(songActions.setLoading(true));
+        axios.delete(`/song/${payload.songId}`)
+            .then(res => {
+                console.log(res)
+                dispatch(songActions.setLoading(false));
+                dispatch(songActions.setError(false));
+                dispatch(fetchSongs());
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(songActions.setLoading(false));
+                dispatch(songActions.setError(true));
+            })
+    }
+}
+
 export const songActions = songsSlice.actions;
 export default songsSlice;
