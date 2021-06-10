@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import TitleItem from '../Layout/TitleTableItems/TitleItem';
 import classes from "./MusicTable.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchSongs, rateSong, songActions} from "../../store/songs";
+import {fetchRatedSongs, fetchSongs, rateSong, songActions} from "../../store/songs";
 import Spinner from "../UI/Spinner/Spinner";
 import Modal from "../UI/Modal/Modal";
 import YouTubeEmbedded from "../YouTubeEmbedded/YouTubeEmbeddded";
@@ -12,7 +12,8 @@ import SongRateForm from "./SongRateForm/SongRateForm";
 const MusicTable = (props) => {
 
     const songs = useSelector(state => state.song.songs);
-    const searchSongs = useSelector(state => state.song.searchSongs)
+    const searchSongs = useSelector(state => state.song.searchSongs);
+    const ratedSongs = useSelector(state => state.song.ratedSongs);
     const error = useSelector(state => state.song.error);
     const isLoading = useSelector(state => state.song.loading);
     const userId = useSelector(state => state.auth.userId);
@@ -20,8 +21,7 @@ const MusicTable = (props) => {
     const rateSuccess = useSelector(state => state.song.rateSuccess);
     const [rateFormError, setRateFormError] = useState(false)
     const dispatch = useDispatch();
-    const isProfile = props.prof === 1;
-
+    const isProfile = props.prof;
     const [isOpen, setIsOpen] = useState(false);
     const [embedId, setEmbedId] = useState("");
 
@@ -33,7 +33,8 @@ const MusicTable = (props) => {
     useEffect(() => {
             dispatch(fetchSongs());
             dispatch(songActions.setSearchSongs([]));
-    }, [dispatch])
+            if(isProfile) dispatch(fetchRatedSongs(userId));
+    }, [dispatch, userId, isProfile])
 
     const onRateClickedHandler = (songId, rating) => {
         if (rating < 1 || rating > 10) {
@@ -60,13 +61,13 @@ const MusicTable = (props) => {
     ));
 
     if (isProfile) {
-        list = songs.map((song) => (
-            <tr key={song._id}>
+        list = ratedSongs.map((song) => (
+            <tr key={song.songId}>
                 <td><img src={youTubeIcon} alt="Play icon" onClick={() => songClicked(song.embedId)}/></td>
                 <td>{song.name}</td>
                 <td>{song.artist}</td>
-                <td>{0}</td>
-                <td>{song.numRatings}</td>
+                <td>{song.userRating}</td>
+                <td>{song.rating}</td>
             </tr>
         ));
     }

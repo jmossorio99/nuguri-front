@@ -7,6 +7,7 @@ const initialState = {
     loading: false,
     rateSuccess: false,
     rateError: false,
+    ratedSongs: [],
     searchSongs: []
 }
 
@@ -31,6 +32,9 @@ const songsSlice = createSlice({
         },
         setRateSuccess(state, action) {
             state.rateSuccess = action.payload;
+        },
+        setRatedSongs(state, action){
+            state.ratedSongs = action.payload;
         }
     }
 });
@@ -67,6 +71,25 @@ export const fetchSearchSongs = (songName) => {
                 dispatch(songActions.setError(true));
                 dispatch(songActions.setLoading(false));
             })
+    }
+}
+
+export const fetchRatedSongs = (userId) => {
+    return dispatch => {
+        dispatch(songActions.setLoading(true));
+        axios.get(`/user/ratedSongs/${userId}`)
+            .then((res) => {
+                dispatch(songActions.setRatedSongs(res.data));
+                console.log("rated songs");
+                console.log(res.data);
+                dispatch(songActions.setError(false));
+                dispatch(songActions.setLoading(false));
+            })
+            .catch(err=>{
+                console.log(err);
+                dispatch(songActions.setError(true));
+                dispatch(songActions.setLoading(false));
+            });
     }
 }
 
